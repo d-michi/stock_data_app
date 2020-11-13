@@ -48,8 +48,7 @@ sector = df.groupby('GICS Sector')
 sorted_sector_unique = sorted(df['GICS Sector'].unique())
 selected_sector = st.sidebar.multiselect('Sector', sorted_sector_unique)
 
-num_company = st.sidebar.slider('Number of Companies', 1, 10)
-
+selected_symbol_period = st.sidebar.selectbox('期間', ["1d","5d","1mo","3mo","6mo","1y","2y","5y","10y","ytd","max"])
 
 sorted_symbol_unique = sorted(df['Symbol'].unique())
 selected_symbol = st.sidebar.multiselect('Symbol', sorted_symbol_unique)
@@ -82,20 +81,10 @@ def filedownload(df):
 st.markdown(filedownload(df_selected_sector), unsafe_allow_html=True)
 
 
-data = yf.download(
-        tickers = list(df_selected_sector.Symbol),
-        period = "ytd", # valid periods: 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max
-        interval = "1d", # valid intervals: 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo
-        group_by = 'ticker',
-        auto_adjust = True,
-        prepost = True,
-        threads = True,
-        proxy = None
-    )
 
-data2 = yf.download(
+data = yf.download(
         tickers = list(df_selected_symbol.Symbol),
-        period = "ytd", # valid periods: 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max
+        period = selected_symbol_period, # valid periods: 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max
         interval = "1d", # valid intervals: 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo
         group_by = 'ticker',
         auto_adjust = True,
@@ -117,23 +106,15 @@ def price_plot(symbol):
   plt.ylabel('Closing Price', fontweight='bold')
   return st.pyplot()
 
-def price_plot2(symbol):
-  df = pd.DataFrame(data2[symbol].Close)
-  df['Date'] = df.index
-  plt.fill_between(df.Date, df.Close, color='skyblue', alpha=0.3)
-  plt.plot(df.Date, df.Close, color='skyblue', alpha=0.8)
-  plt.xticks(rotation=90)
-  plt.title(symbol, fontweight='bold')
-  plt.xlabel('Date', fontweight='bold')
-  plt.ylabel('Closing Price', fontweight='bold')
-  return st.pyplot()
-
-
 
 if st.button('チャート表示 個別企業'):
-    st.header('Stock Closing Price')
+    st.header('株価(終値ベース)')
     for i in list(df_selected_symbol.Symbol):
-        price_plot2(i)
+        price_plot(i)
+
+
+
+
 
 
 
