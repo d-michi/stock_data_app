@@ -15,6 +15,7 @@ import plotly.express as px
 import plotly.io as pio
 import yfinance as yf
 
+
 #st.set_page_config(layout="wide")
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
@@ -109,12 +110,8 @@ def price_plot(symbol):
 
 if st.button('チャート表示 個別企業'):
     st.header('株価(終値ベース)')
+    
     for i in list(df_selected_symbol.Symbol):
         price_plot(i)
-
-
-
-
-
-
+   
 
