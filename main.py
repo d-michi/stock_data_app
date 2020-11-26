@@ -17,17 +17,7 @@ import yfinance as yf
 import sqlite3 
 import hashlib
 
-import app1
-import app2
 
-PAGES = {
-    "App1": app1,
-    "App2": app2
-}
-st.sidebar.title('Navigation')
-selection = st.sidebar.radio("Go to", list(PAGES.keys()))
-page = PAGES[selection]
-page.app()
 
 
 def make_hashes(password):
@@ -55,7 +45,7 @@ c = conn.cursor()
 
 def main():
 
-	st.title("ログイン機能テスト")
+	st.title("ログイン機能")
 
 	menu = ["ホーム","ログイン","サインアップ"]
 	choice = st.sidebar.selectbox("メニュー",menu)
@@ -122,14 +112,14 @@ len(sector_unique)
 st.sidebar.header('銘柄検索')
 sector = df.groupby('GICS Sector')
 
-# Sidebar - Sector selection
+# Sidebar - selection
 sorted_sector_unique = sorted(df['GICS Sector'].unique())
 selected_sector = st.sidebar.multiselect('Sector', sorted_sector_unique)
 
-selected_symbol_period = st.sidebar.selectbox('期間', ["1d","5d","1mo","3mo","6mo","1y","2y","5y","10y","ytd","max"])
-
 sorted_symbol_unique = sorted(df['Symbol'].unique())
 selected_symbol = st.sidebar.multiselect('Symbol', sorted_symbol_unique)
+
+selected_symbol_period = st.sidebar.selectbox('期間', ["1d","5d","1mo","3mo","6mo","1y","2y","5y","10y","ytd","max"])
 
 
 # Filtering data
@@ -185,10 +175,9 @@ def price_plot(symbol):
   return st.pyplot()
 
 
-if st.button('チャート表示 個別企業'):
-    st.header('株価(終値ベース)')
-    
+st.title('個別企業株価チャート')
+
+
+if st.header('株価(終値ベース)'):
     for i in list(df_selected_symbol.Symbol):
         price_plot(i)
-   
-
