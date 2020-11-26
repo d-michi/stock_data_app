@@ -114,12 +114,12 @@ sector = df.groupby('GICS Sector')
 
 # Sidebar - selection
 sorted_sector_unique = sorted(df['GICS Sector'].unique())
-selected_sector = st.sidebar.multiselect('Sector', sorted_sector_unique)
+selected_sector = st.sidebar.multiselect('Sector (業種)', sorted_sector_unique)
 
 sorted_symbol_unique = sorted(df['Symbol'].unique())
-selected_symbol = st.sidebar.multiselect('Symbol', sorted_symbol_unique)
+selected_symbol = st.sidebar.multiselect('Symbol (個別企業) ※2社以上を選択してください', sorted_symbol_unique)
 
-selected_symbol_period = st.sidebar.selectbox('期間', ["1d","5d","1mo","3mo","6mo","1y","2y","5y","10y","ytd","max"])
+selected_symbol_period = st.sidebar.selectbox('期間', ["ytd","1d","5d","1mo","3mo","6mo","1y","2y","5y","10y","max"])
 
 
 # Filtering data
