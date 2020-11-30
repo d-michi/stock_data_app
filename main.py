@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import base64
 import numpy as np
-import talib as ta
+#import talib as ta
 from pandas_datareader import data
 import matplotlib.pyplot as plt
 #from IPython import get_ipython
