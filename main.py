@@ -6,9 +6,9 @@ import numpy as np
 from pandas_datareader import data
 import matplotlib.pyplot as plt
 #from IPython import get_ipython
-ipy = get_ipython()
-if ipy is not None:
-    ipy.run_line_magic('matplotlib', 'inline')
+#ipy = get_ipython()
+#if ipy is not None:
+    #ipy.run_line_magic('matplotlib', 'inline')
 import warnings
 warnings.simplefilter('ignore')
 import plotly.express as px
